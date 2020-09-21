@@ -105,6 +105,9 @@ const AppUseMemo = () => {
     }));
     return longestWord;
   }, []);
+  // One Trick: When you see empty dependencies in useCallback
+  // means you may move the function outside the component
+  // and work with just the passed parameters. (Solution 2)
   // No dependency. Simple logic on the passed argument.
   // We are not accessing any property or function that relates to any state.
   // Now we can add computeLongestWord as dependency, as it is wrapped in useCallback.
