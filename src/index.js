@@ -9,11 +9,13 @@ import AppUseRef from './AppUseRef';
 import AppUseLayoutEffect from './AppUseLayoutEffect';
 import AppUseCallback from './AppUseCallback';
 import AppUseMemo from './AppUseMemo';
+import AppUseReducer from './AppUseReducer';
+import AppUseContext from './AppUseContext';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppUseCallback />
+    <AppUseContext />
   </React.StrictMode>,
   document.getElementById('root')
 );
