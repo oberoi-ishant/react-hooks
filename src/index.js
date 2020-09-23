@@ -11,11 +11,12 @@ import AppUseCallback from './AppUseCallback';
 import AppUseMemo from './AppUseMemo';
 import AppUseReducer from './AppUseReducer';
 import AppUseContext from './AppUseContext';
+import AppUseDebounce from './AppUseDebounce';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppUseContext />
+    <AppUseDebounce />
   </React.StrictMode>,
   document.getElementById('root')
 );
