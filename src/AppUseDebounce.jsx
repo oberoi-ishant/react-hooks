@@ -47,19 +47,19 @@ import _ from "lodash";
 //   memoized with useCallback but when it fires, inside we create a new fn everytime
 //   using debounce. So wrong implementation.  */
 //   // Option: 2
-//   // const makeCall = useCallback((newVal) => {
-//   //   const fn = _.debounce(() => {
-//   //     console.log('Hi')
-//   //     setState({ data: null, loading: true })
-//   //     fetch(`http://numbersapi.com/${newVal}`)
-//   //       .then(x => x.text())
-//   //       .then(y => {
-//   //         setState({ data: y, loading: false });
-//   //         setDVal(newVal);
-//   //       });
-//   //   }, 2000);
-//   //   fn();
-//   // }, []);
+  // const makeCall = useCallback((newVal) => {
+  //   const fn = _.debounce((newVal) => {
+  //     console.log('Hi')
+  //     setState({ data: null, loading: true })
+  //     fetch(`http://numbersapi.com/${newVal}`)
+  //       .then(x => x.text())
+  //       .then(y => {
+  //         setState({ data: y, loading: false });
+  //         setDVal(newVal);
+  //       });
+  //   }, 2000);
+  //   fn(newVal);
+  // }, []);
 
 //   // Option: 3
 //    Create the myfn function once and useCallback to memoize the
@@ -92,16 +92,16 @@ import _ from "lodash";
 //   // the empty array altogether(useCallback(() => {})), you are back to re-creating
 //   // it every time.
 //   // Now same behaviour as Option 1 and 2.
-//   const makeCall = useCallback(_.debounce((newVal) => {
-//     console.log('Hi');
-//     setState({ data: null, loading: true });
-//     fetch(`http://numbersapi.com/${newVal}`)
-//       .then(x => x.text())
-//       .then(y => {
-//         setState({ data: y, loading: false });
-//         setDVal(newVal);
-//       });
-//   }, 2000), []);
+  // const makeCall = useCallback(_.debounce((newVal) => {
+  //   console.log('Hi');
+  //   setState({ data: null, loading: true });
+  //   fetch(`http://numbersapi.com/${newVal}`)
+  //     .then(x => x.text())
+  //     .then(y => {
+  //       setState({ data: y, loading: false });
+  //       setDVal(newVal);
+  //     });
+  // }, 2000), []);
 
 //   return (
 //     <div>
@@ -165,8 +165,6 @@ const AppUseDebounce = () => {
     </div>
   );
 }
-
-
 
 // Class Component Debounce: EASY
 // class AppUseDebounce extends React.Component {
