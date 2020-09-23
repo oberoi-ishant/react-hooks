@@ -11,10 +11,10 @@ import _ from "lodash";
 // React Hooks must be called in a React function component or a custom React Hook function
 
 // // OPTION 1: DEBOUNCE FUNCTION
-const AppUseDebounce = () => {
-  const [val, setVal] = useState(0);
-  const [dVal, setDVal] = useState(0); // debounced value
-  const [state, setState] = useState({ data: null, loading: true });
+// const AppUseDebounce = () => {
+//   const [val, setVal] = useState(0);
+//   const [dVal, setDVal] = useState(0); // debounced value
+//   const [state, setState] = useState({ data: null, loading: true });
 
 
 //   /* TRICK:
@@ -59,7 +59,7 @@ const AppUseDebounce = () => {
 //       });
 //   }, 2000);
 //   fn(newVal);
-// }, []);
+// }, []); // Only on mount component
 
 //   Option: 3
 //   Create the myfn function EVERYTIME and useCallback to memoize the
@@ -88,7 +88,7 @@ const AppUseDebounce = () => {
 
 // const fn2 = myfn();
 
-// const makeCall = useCallback((newVal) => { fn2(newVal);}, []);
+// const makeCall = useCallback((newVal) => { fn2(newVal);}, []); // Only on first render
 
 // Option: 4
 // TRICK: the return function from debounce should not be created
@@ -104,7 +104,7 @@ const AppUseDebounce = () => {
 //       setDVal(newVal);
 //     });
 // }, 2000);
-// const makeCall = useCallback((newVal) => myFn(newVal), []);
+// const makeCall = useCallback((newVal) => myFn(newVal), []); // Only on mount component
 
 //   Option: 5
 //   /* directly CALL debounce inside useCallback and memoize the return
@@ -123,61 +123,16 @@ const AppUseDebounce = () => {
   // the empty array altogether(useCallback(() => {})), you are back to re-creating
   // it every time.
   // Now same behaviour as Option 1 and 2.
-  const makeCall = useCallback(_.debounce((newVal) => {
-    console.log('Hi');
-    setState({ data: null, loading: true });
-    fetch(`http://numbersapi.com/${newVal}`)
-      .then(x => x.text())
-      .then(y => {
-        setState({ data: y, loading: false });
-        setDVal(newVal);
-      });
-  }, 2000), []);
-
-  return (
-    <div>
-      <input
-        type="number"
-        placeholder="enter number"
-        value={ val }
-        onChange={ e => {
-          setVal(e.target.value);
-          makeCall(e.target.value);
-        }} />
-      <div>
-        { state.loading && 'loading...' }
-        { !state.loading && state.data }
-      </div>
-      <div>{ dVal }</div>
-    </div>
-  );
-}
-
-
-
-// OPTION 2: DEBOUNCE VALUE
-// Trick: delay setting a state value or prop.
-// Then you can use it to fire api or perform action
-// after the delay
-// const useDebounceVal = ({ value, delay }) => {
-//   const [dVal, setDVal] = useState(value);
-
-//   const deb = useCallback(_.debounce((value) => {
-//     console.log('value in callback', value);
-//     setDVal(value);
-//   }, delay), []);
-
-//   useEffect(() => {
-//     deb(value);
-//   });
-
-//   return dVal;
-// }
-
-// const AppUseDebounce = () => {
-//   const [val, setVal] = useState(0);
-//   const debounceVal = useDebounceVal({ value: val, delay: 2000 });
-//   const { data, loading } = useFetch(`http://numbersapi.com/${debounceVal}`);
+//   const makeCall = useCallback(_.debounce((newVal) => {
+//     console.log('Hi');
+//     setState({ data: null, loading: true });
+//     fetch(`http://numbersapi.com/${newVal}`)
+//       .then(x => x.text())
+//       .then(y => {
+//         setState({ data: y, loading: false });
+//         setDVal(newVal);
+//       });
+//   }, 2000), []); // Only on mount component
 
 //   return (
 //     <div>
@@ -187,15 +142,60 @@ const AppUseDebounce = () => {
 //         value={ val }
 //         onChange={ e => {
 //           setVal(e.target.value);
+//           makeCall(e.target.value);
 //         }} />
 //       <div>
-//         { loading && 'loading...' }
-//         { !loading && data }
+//         { state.loading && 'loading...' }
+//         { !state.loading && state.data }
 //       </div>
-//       <div>{ debounceVal }</div>
+//       <div>{ dVal }</div>
 //     </div>
 //   );
 // }
+
+
+
+// OPTION 2: DEBOUNCE VALUE
+// Trick: delay setting a state value or prop.
+// Then you can use it to fire api or perform action
+// after the delay
+const useDebounceVal = ({ value, delay }) => {
+  const [dVal, setDVal] = useState(value);
+
+  const deb = useCallback(_.debounce((value) => {
+    console.log('value in callback', value);
+    setDVal(value);
+  }, delay), []); // Only on mount component
+
+  useEffect(() => {
+    deb(value);
+  }, [value, delay]);
+
+  return dVal;
+}
+
+const AppUseDebounce = () => {
+  const [val, setVal] = useState(0);
+  const debounceVal = useDebounceVal({ value: val, delay: 2000 });
+  const { data, loading } = useFetch(`http://numbersapi.com/${debounceVal}`);
+
+  return (
+    <div>
+      <input
+        type="number"
+        placeholder="enter number"
+        value={ val }
+        onChange={ e => {
+          setVal(e.target.value);
+        }} />
+      <div>
+        { loading && 'loading...' }
+        { !loading && data }
+      </div>
+      <div>{ debounceVal }</div>
+    </div>
+  );
+}
 
 // Class Component Debounce: EASY
 // class AppUseDebounce extends React.Component {
