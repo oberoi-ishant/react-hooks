@@ -148,3 +148,27 @@ const AppUseCallback = () => {
 };
 
 export default AppUseCallback;
+
+// It can also be used with ref
+// https://reactjs.org/docs/hooks-faq.html#how-can-i-measure-a-dom-node
+// Basically we are using a callback function to give to the ref like we do in
+// classes. Here we use useCallback to memoize that callback function. And this
+// function recieves the reference to the DOM node.
+
+// function MeasureExample() {
+//   const [height, setHeight] = useState(0);
+
+//   const measuredRef = useCallback(node => {
+//     if (node !== null) {
+//       setHeight(node.getBoundingClientRect().height);
+//     }
+//   }, []);
+
+//   return (
+//     <>
+//       <h1 ref={measuredRef}>Hello, world</h1>
+//       <h2>The above header is {Math.round(height)}px tall</h2>
+//     </>
+//   );
+// }
+

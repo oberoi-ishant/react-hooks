@@ -5,6 +5,9 @@
 // Give a number at end and returns a fact about the number.
 // Fires: ASYNCHORNOUSLY a-synchronously
 
+// NOTE: https://reactjs.org/docs/hooks-reference.html#useeffect
+// The function passed to useEffect will run after the render is committed to the screen.
+
 import React, { useState, useEffect } from 'react';
 import { useForm } from './useForm';
 import { useFetch } from './useFetch';

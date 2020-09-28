@@ -39,6 +39,7 @@ export const useFetchWithuseRef = (url) => {
     return () => {
       // When component Unmounts.
       // set boolean: false ie component not avilable
+      console.log('Unmounts');
       isCurrentComponnentAvailable.current = false;
     }
   }, []);
