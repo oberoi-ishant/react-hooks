@@ -9,6 +9,11 @@ const usePrevious = (value) => {
 
   // The callback function passed in the useEffect will run after the
   // render function. This is how useEffect works.
+  // Keep in mind that useRef doesn’t notify you when its content changes.
+  // Mutating the .current property doesn’t cause a re-render.
+
+  // To understand, read this:
+  // https://blog.logrocket.com/how-to-get-previous-props-state-with-react-hooks/
   useEffect(() => {
     console.log('Ref.current', ref.current);
     ref.current = value;

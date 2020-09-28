@@ -13,7 +13,6 @@ const HelloWithLayoutEffect = () => {
   }, [count]);
 
 
-
   /* Created custom hook useMeasure for the below code */
   // const numberMsgRef = useRef();
   // const [rect, setRect] = useState({});
